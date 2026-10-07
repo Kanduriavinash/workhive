@@ -36,7 +36,7 @@
       </ul>
 
       <div class="d-flex align-items-center gap-2">
-        <button class="btn btn-sm btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center" id="themeToggleBtn" type="button" title="Toggle theme" style="width:38px;height:38px;"><i class="bi bi-moon-stars" id="themeIcon"></i></button>
+        
 
         <div sec:authorize="!isAuthenticated()" class="d-flex gap-2">
           <a th:href="@{/login}" class="btn btn-outline-primary px-3">Log in</a>
@@ -74,12 +74,7 @@
     <hr class="border-secondary my-4">
     <div class="d-flex flex-column flex-sm-row justify-content-between gap-2 small"><span>© 2026 WorkHive</span><span>Built as a full-stack Java project</span></div>
   </div>
-  <script>
-    (function(){
-      function updateTheme(t){document.documentElement.setAttribute('data-bs-theme',t);localStorage.setItem('workhive-theme',t);const i=document.getElementById('themeIcon');if(i)i.className=t==='dark'?'bi bi-sun text-warning':'bi bi-moon-stars text-primary';}
-      window.addEventListener('DOMContentLoaded',function(){const t=localStorage.getItem('workhive-theme')||'light';updateTheme(t);const b=document.getElementById('themeToggleBtn');if(b)b.addEventListener('click',function(){updateTheme(document.documentElement.getAttribute('data-bs-theme')==='dark'?'light':'dark');});});
-    })();
-  </script>
+
 </footer>
 </body>
 </html>
