@@ -53,7 +53,7 @@
 
             <!-- Quick Filter Chips -->
             <div class="d-flex align-items-center gap-2 mt-3 pt-3 border-top flex-wrap">
-                <span class="small text-muted fw-semibold me-1"><i class="bi bi-lightning-charge me-1 text-warning"></i>Popular:</span>
+                <span class="small text-muted fw-semibold me-1"><i class="bi bi-lightning-charge me-1"></i>Popular:</span>
                 <a th:href="@{/jobs(keyword='Java')}" class="skill-tag">Java</a>
                 <a th:href="@{/jobs(keyword='Spring Boot')}" class="skill-tag">Spring Boot</a>
                 <a th:href="@{/jobs(keyword='Backend')}" class="skill-tag">Backend</a>
@@ -97,7 +97,6 @@
 
                                 <div class="text-secondary fw-semibold small mb-2 d-flex align-items-center gap-1">
                                     <span th:text="${job.recruiter.companyName}">Tech Corp</span>
-                                    <i class="bi bi-patch-check-fill text-primary" style="font-size: 0.85rem;" title="Verified Employer"></i>
                                 </div>
 
                                 <p class="text-secondary small mb-3 text-break" th:text="${#strings.abbreviate(job.description, 160)}">
@@ -120,7 +119,7 @@
                         <div class="text-muted small mb-1" th:if="${job.salary == null}">Competitive Compensation</div>
 
                         <div class="text-muted small mb-3" th:if="${job.deadline != null}">
-                            <i class="bi bi-hourglass-split me-1 text-warning"></i>Apply by <span th:text="${job.deadline}">2026-11-01</span>
+                            <i class="bi bi-hourglass-split me-1"></i>Apply by <span th:text="${job.deadline}">2026-11-01</span>
                         </div>
 
                         <a th:href="@{/jobs/{id}(id=${job.id})}" class="btn btn-outline-primary px-4 fw-semibold">
@@ -133,7 +132,7 @@
 
         <!-- Empty State -->
         <div class="card p-5 text-center border-0 shadow-sm" th:if="${jobs.isEmpty()}">
-            <div class="mx-auto mb-3" style="width: 64px; height: 64px; border-radius: 50%; background: rgba(37,99,235,0.08); display: flex; align-items: center; justify-content: center; font-size: 1.75rem; color: var(--brand-blue);">
+            <div class="mx-auto mb-3" style="width: 64px; height: 64px; border-radius: 50%; background:#f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; color:#111;">
                 <i class="bi bi-search"></i>
             </div>
             <h4 class="fw-bold mb-1">No matching openings found</h4>
