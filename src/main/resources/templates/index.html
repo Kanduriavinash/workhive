@@ -33,15 +33,15 @@
                 <div class="search-dock mx-auto mb-4" style="max-width: 820px;">
                     <form th:action="@{/jobs}" method="get" class="row g-2 align-items-center m-0">
                         <div class="col-md-7 p-0">
-                            <div class="search-field-group">
+                            <div class="search-field-group" onclick="this.querySelector('input')?.focus()">
                                 <i class="bi bi-search"></i>
-                                <input type="text" name="keyword" placeholder="Role title, tech stack (e.g. Spring Boot, Java, React)...">
+                                <input type="text" name="keyword" placeholder="Role title, tech stack (e.g. Spring Boot, Java, React)..." autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-3 p-0 d-none d-md-block">
-                            <div class="search-field-group border-start">
+                            <div class="search-field-group border-start" onclick="this.querySelector('input')?.focus()">
                                 <i class="bi bi-geo-alt"></i>
-                                <input type="text" name="location" placeholder="Remote, SF, NY...">
+                                <input type="text" name="location" placeholder="Remote, SF, NY..." autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-2 p-0">
