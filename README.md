@@ -12,6 +12,7 @@
 
 <p align="center">
   <a href="https://workhive1.onrender.com/"><img src="https://img.shields.io/badge/Live%20Demo-WorkHive-2563EB?style=for-the-badge&logo=render" alt="Live Demo"></a>
+  <a href="https://median.co/share/pwmaarr#apk"><img src="https://img.shields.io/badge/Android%20App-Download-111111?style=for-the-badge&logo=android" alt="Android App"></a>
   <a href="https://github.com/Kanduriavinash/workhive"><img src="https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=openjdk" alt="Java 21"></a>
   <a href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/badge/Spring%20Boot-3.3.5-6DB33F?style=for-the-badge&logo=springboot" alt="Spring Boot"></a>
   <a href="https://spring.io/projects/spring-security"><img src="https://img.shields.io/badge/Spring%20Security-6.x-6DB33F?style=for-the-badge&logo=springsecurity" alt="Spring Security"></a>
@@ -22,12 +23,15 @@
 
 **Live Demo:** [https://workhive1.onrender.com/](https://workhive1.onrender.com/)
 
+**Android App:** [Download / Install WorkHive](https://median.co/share/pwmaarr#apk)
+
 ---
 
 ## Table of Contents
 
 - [Overview](#overview)
 - [Core Capabilities](#core-capabilities)
+- [Android App](#android-app)
 - [System Architecture](#system-architecture)
 - [Request & Application Flow](#request--application-flow)
 - [Security Architecture](#security-architecture)
@@ -113,6 +117,16 @@ Traditional academic job-portal projects often stop at basic job CRUD operations
 - Remote
 - Internship
 - Contract
+
+---
+
+## Android App
+
+WorkHive also has an Android app access point through the Web-to-App deployment.
+
+**[Open the WorkHive Android App / APK page](https://median.co/share/pwmaarr#apk)**
+
+Users can open the app page on an Android device, scan the QR code when provided, and download/install the WorkHive APK.
 
 ---
 
@@ -787,6 +801,7 @@ The current architecture provides a foundation for extending WorkHive without re
 | Application status management | Implemented |
 | Docker setup | Included |
 | Basic automated testing | Included |
+| Android app access | Available |
 | Comprehensive automated testing | Planned |
 | Production security hardening | Planned |
 | Email notifications | Planned |
@@ -809,6 +824,7 @@ WorkHive demonstrates more than frontend CRUD functionality. The project brings 
 - Application lifecycle management.
 - Docker-based deployment setup.
 - Automated test infrastructure.
+- Web and Android app access.
 
 The architecture is also extensible: additional features such as notifications, interview scheduling, analytics or a REST API can be introduced without moving business logic into the presentation layer.
 
