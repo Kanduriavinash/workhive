@@ -5,183 +5,390 @@
 <h1 align="center">WorkHive</h1>
 
 <p align="center">
-  A role-based job recruitment platform built with Java, Spring Boot, Spring Security and Thymeleaf.
+  <strong>Full-Stack Job Portal & Recruitment Management Platform</strong>
+</p>
+
+<p align="center">
+  A Java and Spring Boot web application connecting job seekers and recruiters through profile management, job discovery, applications and applicant tracking.
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Java-21-orange?style=flat-square&logo=openjdk" alt="Java 21"/>
   <img src="https://img.shields.io/badge/Spring%20Boot-3.3.5-brightgreen?style=flat-square&logo=springboot" alt="Spring Boot 3.3.5"/>
   <img src="https://img.shields.io/badge/Spring%20Security-6.x-blue?style=flat-square&logo=springsecurity" alt="Spring Security"/>
-  <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql" alt="MySQL"/>
+  <img src="https://img.shields.io/badge/Spring%20Data%20JPA-Hibernate-59666C?style=flat-square" alt="Spring Data JPA"/>
   <img src="https://img.shields.io/badge/Thymeleaf-3.x-005F0F?style=flat-square&logo=thymeleaf" alt="Thymeleaf"/>
+  <img src="https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=flat-square&logo=bootstrap" alt="Bootstrap"/>
+  <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql" alt="MySQL"/>
   <img src="https://img.shields.io/badge/Docker-ready-2496ED?style=flat-square&logo=docker" alt="Docker"/>
 </p>
-
-<p align="center"><strong>Find opportunities. Manage applications. Hire better.</strong></p>
 
 ---
 
 ## Overview
 
-**WorkHive** is a full-stack Java web application that connects job seekers and recruiters through a complete recruitment workflow.
+**WorkHive** is a full-stack recruitment platform built with **Java 21 and Spring Boot 3**.
 
-Candidates can create professional profiles, manage resumes, discover jobs and track applications. Recruiters can manage company profiles, publish job openings, review applicants and update application stages.
+It provides two role-based experiences:
 
-The project demonstrates practical **Spring Boot architecture, relational data modeling, authentication and authorization, server-side rendering, validation, file handling and containerization**.
+- **Job Seekers** can create profiles, manage education and work experience, upload resumes, search for jobs, submit applications and track their application status.
+- **Recruiters** can create company profiles, publish and manage job postings, review applicants, inspect candidate profiles and move applications through a recruitment pipeline.
 
-> **Status:** Functional academic/portfolio project. Core recruitment workflows are implemented; additional production hardening and UI refinement are planned.
+The application uses a layered architecture with **Spring MVC, Spring Security, Spring Data JPA, Hibernate, Thymeleaf and a relational database**.
+
+> **Project status:** Functional academic/portfolio project. The core recruitment workflow is implemented. Production hardening and additional automated test coverage remain future work.
 
 ---
 
-## Key Features
+## What WorkHive Does
 
-### Job Seekers
+WorkHive models the recruitment process as a connected workflow rather than a collection of independent CRUD screens.
 
-- Create and manage a professional profile
-- Store education and work-experience information
-- Add skills, languages and career preferences
-- Upload and manage a resume
-- Search jobs by keyword and employment type
-- View detailed job postings
-- Apply with a cover letter
-- Submit a tailored resume for an application
-- Prevent duplicate applications
-- Track application status
+\`\`\`
+                  WORKHIVE RECRUITMENT FLOW
 
-### Recruiters
+ Job Seeker                                      Recruiter
+     │                                               │
+     ▼                                               ▼
+ Create Profile                              Create Company Profile
+     │                                               │
+     ├── Education                                  │
+     ├── Experience                                 ▼
+     └── Resume                                  Post Job
+     │                                               │
+     └──────────────► Browse Jobs ◄─────────────────┘
+                            │
+                            ▼
+                       Apply for Job
+                            │
+                            ▼
+                       Application
+                            │
+                            ▼
+                    Recruiter Review
+                            │
+             ┌──────────────┼──────────────┐
+             ▼              ▼              ▼
+        Under Review   Shortlisted     Rejected
+                            │
+                            ▼
+                         Accepted
+\`\`\`
 
-- Create and manage company profiles
-- Publish job openings
-- Set salary, location, deadline, employment type and required skills
-- Edit, activate/pause and delete job postings
-- View applicants across company postings
-- Review candidate profiles
+---
+
+## Features
+
+### Job Seeker Features
+
+- User registration with the **Job Seeker** role
+- Secure login using Spring Security
+- Candidate profile management
+- Personal and contact information
+- Skills and known languages
+- Desired job title and preferred industry
+- Employment-type preference
+- Education records
+- Work-experience records
+- Add and delete education entries
+- Add and delete work-experience entries
+- Resume upload
+- Job browsing
+- Keyword-based job search
+- Employment-type filtering
+- Detailed job pages
+- Application submission
+- Cover letter support
+- Optional job-specific resume upload
+- Duplicate application prevention
+- Application history
+- Application status tracking
+
+### Recruiter Features
+
+- User registration with the **Recruiter** role
+- Recruiter/company profile management
+- Company name, website, location and industry
+- Company description
+- Recruiter dashboard
+- Job creation
+- Job editing
+- Job deletion
+- Activate/deactivate job postings
+- Salary and deadline fields
+- Employment-type selection
+- Required skills
+- Job description and requirements
+- View all company job postings
+- View applicants for a specific job
+- View all applicants
+- View applicant profiles
+- Review education and work experience
 - Access submitted resumes
-- Update application status through the recruitment pipeline
-
-### Authentication & Security
-
-- Spring Security form-based authentication
-- BCrypt password hashing
-- Role-based access control
-- Protected candidate and recruiter areas
-- CSRF protection
-- Session invalidation on logout
-- Server-side authorization checks for recruiter operations
+- Update application status
 
 ---
 
-## Recruitment Workflow
+## Application Status Pipeline
 
-### Candidate
+WorkHive currently supports five application states:
 
-\`\`\`
-Register
-   ↓
-Build Profile
-   ↓
-Upload Resume
-   ↓
-Browse Jobs
-   ↓
-Apply
-   ↓
-Track Application
-\`\`\`
-
-### Recruiter
-
-\`\`\`
-Register
-   ↓
-Company Profile
-   ↓
-Post Job
-   ↓
-Receive Applications
-   ↓
-Review Candidates
-   ↓
-Update Status
-\`\`\`
-
-### Application Pipeline
-
-| Status | Meaning |
+| Status | Description |
 |---|---|
-| **Applied** | Candidate submitted an application |
-| **Under Review** | Recruiter is reviewing the application |
-| **Shortlisted** | Candidate progressed to the next stage |
-| **Accepted** | Candidate was selected |
-| **Rejected** | Application was declined |
+| **Applied** | Application has been submitted |
+| **Under Review** | Recruiter is reviewing the candidate |
+| **Shortlisted** | Candidate has progressed to the next stage |
+| **Accepted** | Candidate has been selected |
+| **Rejected** | Application has been declined |
 
 ---
 
-## Architecture
+## Job Types
+
+The application supports:
+
+- Full Time
+- Part Time
+- Remote
+- Internship
+- Contract
+
+---
+
+## Job Search
+
+The job search is implemented through a Spring Data JPA query.
+
+A keyword can match:
+
+- Job title
+- Job location
+- Required skills
+- Recruiter/company name
+
+The search can also be combined with a **job type** filter.
+
+Only active job postings are returned by the public search.
+
+---
+
+## System Architecture
 
 WorkHive follows a layered Spring Boot architecture:
 
 \`\`\`
-┌──────────────────────────────┐
-│        Browser / Client      │
-└──────────────┬───────────────┘
-               ↓
-┌──────────────────────────────┐
-│ Thymeleaf + Bootstrap UI     │
-└──────────────┬───────────────┘
-               ↓
-┌──────────────────────────────┐
-│ Spring MVC Controllers       │
-└──────────────┬───────────────┘
-               ↓
-┌──────────────────────────────┐
-│ Service Layer                │
-│ Business & workflow logic    │
-└──────────────┬───────────────┘
-               ↓
-┌──────────────────────────────┐
-│ Spring Data JPA Repositories │
-└──────────────┬───────────────┘
-               ↓
-┌──────────────────────────────┐
-│ MySQL / H2                   │
-└──────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│                  Browser                    │
+│            HTML / CSS / Bootstrap           │
+└──────────────────────┬──────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────┐
+│              Thymeleaf Views                │
+│        Server-side rendered templates       │
+└──────────────────────┬──────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────┐
+│            Spring MVC Controllers            │
+│ Auth • Jobs • Seeker • Recruiter • Resume   │
+└──────────────────────┬──────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────┐
+│                Service Layer                │
+│ Users • Jobs • Applications • Profiles      │
+│                 File Storage                │
+└──────────────────────┬──────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────┐
+│          Spring Data JPA Repositories       │
+└──────────────────────┬──────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────┐
+│              H2 / MySQL Database            │
+└─────────────────────────────────────────────┘
 
-       Spring Security
-      protects the flow
+              Spring Security
+       authentication + authorization
 \`\`\`
 
-### Main Layers
+### Architectural Responsibilities
 
 | Layer | Responsibility |
 |---|---|
-| **Controller** | Handles HTTP requests and prepares view data |
-| **Service** | Contains business and application logic |
-| **Repository** | Provides database access through Spring Data JPA |
-| **Model** | Represents persistent domain entities |
-| **DTO** | Handles data transfer and validation |
-| **Config** | Security, authentication and application initialization |
-| **Templates** | Server-rendered Thymeleaf pages |
-| **Static** | CSS, images and frontend assets |
+| **Controller** | Handles HTTP requests and coordinates views |
+| **Service** | Contains business rules and application logic |
+| **Repository** | Database access through Spring Data JPA |
+| **Model** | JPA entities representing application data |
+| **DTO** | Form and data-transfer objects with validation |
+| **Config** | Security, authentication and data initialization |
+| **Templates** | Thymeleaf UI |
+| **Static** | CSS and image assets |
+
+---
+
+## Security Architecture
+
+Spring Security protects the application according to the authenticated user's role.
+
+### Public routes
+
+The following areas are publicly accessible:
+
+- Home page
+- Job listing
+- Job details
+- Registration
+- Login
+- Static CSS/JS/images
+- H2 console in the current development configuration
+
+### Job Seeker routes
+
+\`\`\`
+/seeker/**
+/apply/**
+\`\`\`
+
+require:
+
+\`\`\`
+ROLE_JOB_SEEKER
+\`\`\`
+
+### Recruiter routes
+
+\`\`\`
+/recruiter/**
+\`\`\`
+
+require:
+
+\`\`\`
+ROLE_RECRUITER
+\`\`\`
+
+### Resume routes
+
+\`\`\`
+/resumes/**
+\`\`\`
+
+currently require an authenticated user.
+
+### Security mechanisms used
+
+- Spring Security 6
+- BCrypt password hashing
+- Form-based authentication
+- Custom authentication success handling
+- Role-based authorization
+- CSRF protection
+- Session invalidation on logout
+- JSESSIONID deletion on logout
+- Server-side ownership checks for recruiter job management
+- Server-side ownership checks for application status updates
+- Server-side ownership checks for candidate education and experience deletion
+
+---
+
+## Data Model
+
+The main domain relationships are:
+
+\`\`\`
+                         User
+                    ┌──────┴──────┐
+                    │             │
+                    ▼             ▼
+          JobSeekerProfile   RecruiterProfile
+             │       │              │
+             │       ├── Education  │
+             │       └── Experience │
+             │                      │
+             │                      └── JobPosting
+             │                             │
+             └────── Application ◄─────────┘
+\`\`\`
+
+### Important entities
+
+| Entity | Purpose |
+|---|---|
+| **User** | Authentication, contact information and role |
+| **JobSeekerProfile** | Candidate-specific information |
+| **RecruiterProfile** | Company/recruiter information |
+| **JobPosting** | Job listing and recruitment requirements |
+| **Application** | Candidate application against a job |
+| **Education** | Candidate education history |
+| **WorkExperience** | Candidate professional experience |
+
+### Application uniqueness
+
+The database defines a unique constraint on:
+
+\`\`\`
+(job_posting_id, job_seeker_id)
+\`\`\`
+
+This prevents the same candidate from creating multiple application records for the same job.
+
+---
+
+## Resume Management
+
+Candidates can upload a resume from their profile or provide a different resume when applying to a specific job.
+
+### Current implementation
+
+- Upload directory: \`uploads/resumes/\`
+- Generated stored filename: UUID + original extension
+- Maximum multipart request size: **10 MB**
+- Original filename is retained as metadata
+- Resume can be served inline through the resume controller
+- Applications retain the resume associated with that application
+
+### Important production note
+
+The current implementation does **not** perform strict server-side MIME/content validation before storing an uploaded file. The UI suggests PDF/DOCX uploads, but production deployment should add backend file validation and stronger access control for individual resume resources.
 
 ---
 
 ## Technology Stack
 
-| Technology | Purpose |
-|---|---|
-| **Java 21** | Core programming language |
-| **Spring Boot 3.3.5** | Application framework |
-| **Spring MVC** | Web layer |
-| **Spring Security 6** | Authentication and authorization |
-| **Spring Data JPA / Hibernate** | Persistence and ORM |
-| **Thymeleaf** | Server-side rendering |
-| **Bootstrap 5.3** | Responsive UI |
-| **Bootstrap Icons** | Interface icons |
-| **MySQL 8** | Relational database option |
-| **H2** | Embedded development database |
-| **Maven** | Build and dependency management |
-| **Docker** | Containerization |
+### Backend
+
+- **Java 21**
+- **Spring Boot 3.3.5**
+- Spring MVC
+- Spring Security 6
+- Spring Data JPA
+- Hibernate
+- Jakarta Validation
+
+### Frontend
+
+- Thymeleaf
+- HTML5
+- CSS3
+- Bootstrap 5.3
+- Bootstrap Icons
+- JavaScript for UI interactions
+
+### Database
+
+- **H2** for the default development configuration
+- **MySQL 8** supported through the MySQL Connector/J dependency
+
+### Build & Deployment
+
+- Maven
+- Maven Wrapper
+- Docker
+- Docker Compose
 
 ---
 
@@ -189,64 +396,74 @@ WorkHive follows a layered Spring Boot architecture:
 
 \`\`\`
 workhive/
-├── src/main/java/com/workhive/
-│   ├── config/
-│   ├── controller/
-│   ├── dto/
-│   ├── model/
-│   ├── repository/
-│   └── service/
 │
-├── src/main/resources/
-│   ├── static/
-│   │   ├── css/
-│   │   └── images/
-│   ├── templates/
-│   │   ├── fragments/
-│   │   ├── recruiter/
-│   │   └── seeker/
-│   └── application.properties
+├── src/
+│   ├── main/
+│   │   ├── java/com/workhive/
+│   │   │   ├── config/
+│   │   │   │   ├── CustomAuthenticationSuccessHandler.java
+│   │   │   │   ├── CustomUserDetails.java
+│   │   │   │   ├── CustomUserDetailsService.java
+│   │   │   │   ├── DataInitializer.java
+│   │   │   │   └── SecurityConfig.java
+│   │   │   │
+│   │   │   ├── controller/
+│   │   │   │   ├── AuthController.java
+│   │   │   │   ├── JobController.java
+│   │   │   │   ├── JobSeekerController.java
+│   │   │   │   ├── RecruiterController.java
+│   │   │   │   └── ResumeDownloadController.java
+│   │   │   │
+│   │   │   ├── dto/
+│   │   │   ├── model/
+│   │   │   ├── repository/
+│   │   │   └── service/
+│   │   │
+│   │   └── resources/
+│   │       ├── static/
+│   │       │   ├── css/
+│   │       │   └── images/
+│   │       ├── templates/
+│   │       │   ├── fragments/
+│   │       │   ├── recruiter/
+│   │       │   └── seeker/
+│   │       └── application.properties
+│   │
+│   └── test/
 │
-├── src/test/
+├── .mvn/
 ├── Dockerfile
 ├── docker-compose.yml
-├── pom.xml
 ├── mvnw
+├── mvnw.cmd
+├── pom.xml
 └── README.md
 \`\`\`
 
 ---
 
-## Core Domain Model
+## Main Controllers
 
-\`\`\`
-User
- ├── JobSeekerProfile
- │      ├── Education
- │      ├── WorkExperience
- │      └── Applications
- │
- └── RecruiterProfile
-        └── JobPosting
-               └── Applications
-\`\`\`
-
-This structure keeps role-specific profile information separated while connecting jobs, candidates and applications through JPA relationships.
+| Controller | Responsibility |
+|---|---|
+| **AuthController** | Home, login and registration |
+| **JobController** | Public job search and job details |
+| **JobSeekerController** | Candidate dashboard, profile, resume, education, experience and applications |
+| **RecruiterController** | Recruiter dashboard, company profile, jobs and applicant management |
+| **ResumeDownloadController** | Serves stored resume files |
 
 ---
 
-## Demo Accounts
+## Main Services
 
-The development initializer creates sample data when the database is empty.
-
-| Role | Email | Password |
-|---|---|---|
-| Recruiter | \`recruiter@workhive.com\` | \`password123\` |
-| Job Seeker | \`seeker@workhive.com\` | \`password123\` |
-
-The seeded environment includes sample companies, job postings, candidate information and an application.
-
-> **Security:** These credentials are for local/demo use only. Never use them for a production deployment.
+| Service | Responsibility |
+|---|---|
+| **UserService** | Registration and user/profile initialization |
+| **JobPostingService** | Job creation, editing, search, activation and deletion |
+| **ApplicationService** | Application submission, retrieval and status updates |
+| **JobSeekerService** | Candidate profile, resume, education and experience |
+| **RecruiterService** | Recruiter/company profile management |
+| **FileStorageService** | Resume file storage and retrieval |
 
 ---
 
@@ -254,68 +471,89 @@ The seeded environment includes sample companies, job postings, candidate inform
 
 ### Prerequisites
 
-- JDK 21
-- Git
+Install:
+
+- **JDK 21**
+- **Git**
 - Docker Desktop *(optional)*
 
-The repository includes the Maven Wrapper, so Maven does not need to be installed separately.
+The project includes the Maven Wrapper, so Maven does not need to be installed separately.
 
-### Clone
+### 1. Clone
 
 \`\`\`bash
 git clone https://github.com/Kanduriavinash/workhive.git
 cd workhive
 \`\`\`
 
-### Run locally
+### 2. Run the application
 
-**Windows**
+#### Windows
 
 \`\`\`powershell
 .\mvnw.cmd spring-boot:run
 \`\`\`
 
-**Linux / macOS**
+#### Linux / macOS
 
 \`\`\`bash
 ./mvnw spring-boot:run
 \`\`\`
 
-Open **http://localhost:8080**
+The application runs on:
 
-### Build
+\`\`\`
+http://localhost:8080
+\`\`\`
 
-**Windows**
+### 3. Build
+
+Windows:
 
 \`\`\`powershell
 .\mvnw.cmd clean package
 \`\`\`
 
-**Linux / macOS**
+Linux / macOS:
 
 \`\`\`bash
 ./mvnw clean package
 \`\`\`
 
-### Test
+### 4. Run tests
 
-\`\`\`bash
-./mvnw test
-\`\`\`
-
-On Windows:
+Windows:
 
 \`\`\`powershell
 .\mvnw.cmd test
 \`\`\`
 
+Linux / macOS:
+
+\`\`\`bash
+./mvnw test
+\`\`\`
+
+The repository currently contains a Spring Boot context-loading test. Broader unit/integration/security test coverage is a planned improvement.
+
 ---
 
 ## Database Configuration
 
-The default configuration uses an embedded **H2 in-memory database**, allowing the application to start without a separate database server.
+### Default: H2
 
-For MySQL, use environment-specific configuration or environment variables.
+The current \`application.properties\` uses:
+
+- H2 database
+- In-memory persistence
+- H2 dialect
+- Hibernate \`ddl-auto=update\`
+
+This means the application can start without installing MySQL locally.
+
+### MySQL
+
+The project also includes the MySQL Connector/J dependency and commented MySQL configuration.
 
 Example:
 
@@ -323,202 +561,332 @@ Example:
 spring.datasource.url=jdbc:mysql://localhost:3306/workhive
 spring.datasource.username=root
 spring.datasource.password=\${DB_PASSWORD}
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
 \`\`\`
 
-**Never commit real database credentials to source control.**
+Use environment variables or a secret-management solution for real credentials.
+
+> **Important:** Never commit real database passwords to GitHub. Any previously exposed credential should be rotated.
 
 ---
 
 ## Docker
 
-The repository includes a multi-stage Dockerfile and Docker Compose configuration for running WorkHive with MySQL.
+The repository includes:
+
+- A multi-stage \`Dockerfile\`
+- A \`docker-compose.yml\`
+- Java 21 build/runtime images
+- MySQL 8 service
+- Persistent MySQL volume
+- Application container on port 8080
+
+### Start
 
 \`\`\`bash
 docker compose up --build
 \`\`\`
 
-Open **http://localhost:8080**
-
-Stop containers:
+### Stop
 
 \`\`\`bash
 docker compose down
 \`\`\`
 
-Remove the local database volume:
+### Stop and remove database volume
 
 \`\`\`bash
 docker compose down -v
 \`\`\`
 
-> The supplied Compose setup is intended for local development/demo use. Review credentials, secrets, networking and persistence before public production deployment.
+> The included Compose credentials are intended for local development/demo use and should be replaced with secure secrets before any public deployment.
 
 ---
 
-## Resume Management
+## Demo Data
 
-WorkHive supports resumes for candidate profiles and individual applications.
+On the first application startup, the development initializer creates sample recruitment data when the database is empty.
 
-- Maximum multipart upload size: **10 MB**
-- Files are stored under \`uploads/resumes/\`
-- Stored filenames use generated UUIDs
-- Candidates can submit a tailored resume for an application
+### Demo accounts
 
-For production use, stricter server-side file validation and fine-grained resume authorization should be added.
+| Role | Email | Password |
+|---|---|---|
+| Recruiter | \`recruiter@workhive.com\` | \`password123\` |
+| Job Seeker | \`seeker@workhive.com\` | \`password123\` |
 
----
+The seed data includes:
 
-## Security Design
+- Sample recruiter/company profiles
+- Multiple job postings
+- Candidate profile information
+- Education and work experience
+- A sample resume file
+- A pre-existing application
 
-### Implemented
-
-- BCrypt password hashing
-- Form-based authentication
-- Role-based route authorization
-- Protected seeker and recruiter areas
-- CSRF protection
-- Session invalidation on logout
-- Authorization checks for recruiter application operations
-
-### Production Hardening Roadmap
-
-- Environment-based secret management
-- Strict resume MIME/content validation
-- Fine-grained resume download authorization
-- Production-specific security configuration
-- Disable H2 console in production
-- HTTPS and secure cookie configuration
-- Expanded automated security tests
+> These credentials are for local/demo purposes only.
 
 ---
 
-## UI & UX
+## UI Pages
 
-The interface uses **Thymeleaf, Bootstrap 5 and Bootstrap Icons**.
+### Public
 
-Current UI areas include:
+- Home
+- Browse Jobs
+- Job Details
+- Login
+- Registration
 
-- Responsive navigation
-- Light/dark theme support
-- Job listing cards
-- Job detail pages
-- Candidate dashboard
-- Candidate profile management
-- Application tracking
-- Recruiter dashboard
-- Job management
-- Applicant pipeline
-- Resume upload interfaces
-- Responsive layouts
+### Job Seeker
 
-The UI is designed around the recruitment workflow instead of a generic CRUD interface.
+- Dashboard
+- Profile
+- Education management
+- Work-experience management
+- Resume management
+- My Applications
+
+### Recruiter
+
+- Dashboard
+- Company Profile
+- Manage Jobs
+- Create/Edit Job
+- Applicants
+- Applicant Profile
 
 ---
 
 ## Screenshots
 
-Screenshots can be added here as the UI is finalized.
+For a strong portfolio presentation, add screenshots of:
 
-Recommended showcase screenshots:
-
-1. Home / Job Discovery
-2. Browse Jobs
-3. Job Details
-4. Candidate Dashboard
-5. Candidate Profile
-6. Recruiter Dashboard
-7. Manage Jobs
-8. Applicant Pipeline
-9. Login / Registration
+| Screenshot | Purpose |
+|---|---|
+| **Home Page** | Overall WorkHive UI |
+| **Job Search** | Search and filtering |
+| **Job Details** | Job information and application flow |
+| **Login/Register** | Authentication and role selection |
+| **Job Seeker Dashboard** | Candidate experience |
+| **Candidate Profile** | Resume, education and experience |
+| **Applications** | Application tracking |
+| **Recruiter Dashboard** | Recruiter overview |
+| **Manage Jobs** | Job lifecycle management |
+| **Applicant Pipeline** | Recruitment workflow |
 
 ---
 
 ## Engineering Highlights
 
-### Layered architecture
+### 1. Layered Spring architecture
 
-Controllers, services and repositories have clearly separated responsibilities.
+The application separates controllers, services, repositories and entities, making business logic easier to maintain.
 
-### Role-based application design
+### 2. Role-based access control
 
-Candidate and recruiter capabilities are separated through Spring Security authorities.
+Spring Security distinguishes between:
 
-### Recruitment workflow
+\`\`\`
+ROLE_JOB_SEEKER
+ROLE_RECRUITER
+\`\`\`
 
-Applications connect users, profiles, jobs and recruiter decisions instead of functioning as isolated CRUD records.
+and protects role-specific routes accordingly.
 
-### Resume handling
+### 3. Ownership checks
 
-The application supports both profile resumes and job-specific resumes.
+Recruiter operations verify that the authenticated recruiter owns the relevant job before modifying or deleting it.
 
-### Development-friendly database setup
+Candidate education and experience deletion also checks ownership.
 
-H2 provides simple local development while MySQL and Docker Compose support a more realistic database environment.
+### 4. Application integrity
+
+A database unique constraint prevents duplicate applications for the same candidate/job combination.
+
+### 5. Search implementation
+
+Job search uses a JPQL query that supports keyword matching across multiple job/company fields plus job-type filtering.
+
+### 6. Resume storage
+
+Uploaded resumes receive generated UUID-based filenames, avoiding direct reliance on user-provided filenames for storage.
+
+### 7. Development-friendly setup
+
+H2 allows quick startup while MySQL and Docker Compose provide an alternative environment closer to a deployed application.
 
 ---
 
-## Roadmap
+## Security Considerations
 
-### Completed
+WorkHive includes several security mechanisms, but it should **not yet be described as production-hardened**.
 
-- [x] Authentication and registration
+### Current protections
+
+- BCrypt password hashing
+- Spring Security authentication
+- Role-based route protection
+- CSRF protection
+- Logout session invalidation
+- Recruiter ownership checks
+- Candidate ownership checks
+- Duplicate application constraint
+
+### Recommended before production
+
+- Strict backend resume type/content validation
+- Fine-grained authorization for resume downloads
+- Disable H2 console in production
+- Move all credentials to environment variables/secrets
+- HTTPS-only deployment
+- Secure cookie configuration
+- Add security-focused integration tests
+- Add stronger path-boundary validation for stored files
+- Add production-specific Spring profiles
+
+---
+
+## Testing
+
+The project includes:
+
+- Spring Boot Test
+- Spring Security Test
+
+Current test coverage includes an application context-loading test.
+
+### Recommended expansion
+
+\`\`\`
+Authentication
+   ├── Registration validation
+   ├── Login success/failure
+   └── Role authorization
+
+Jobs
+   ├── Create
+   ├── Update
+   ├── Delete
+   └── Search
+
+Applications
+   ├── Submit
+   ├── Duplicate prevention
+   ├── Status updates
+   └── Ownership checks
+
+Files
+   ├── Upload validation
+   └── Access authorization
+\`\`\`
+
+---
+
+## Future Enhancements
+
+Planned improvements include:
+
+- Advanced job filters
+- Pagination for jobs and applicants
+- Candidate profile completion indicators
+- Recruiter analytics
+- Email notifications
+- Stronger resume file validation
+- Fine-grained resume authorization
+- Expanded unit and integration tests
+- Production-specific configuration profiles
+- Managed cloud database
+- External object storage for resumes
+- Improved accessibility
+- Additional mobile UX refinements
+- Production deployment and monitoring
+
+---
+
+## Project Roadmap
+
+### Implemented
+
+- [x] Role-based registration
+- [x] Authentication
+- [x] BCrypt password hashing
 - [x] Candidate profiles
-- [x] Recruiter profiles
-- [x] Job posting
-- [x] Job search
-- [x] Job applications
-- [x] Application status management
+- [x] Recruiter/company profiles
+- [x] Education management
+- [x] Work-experience management
 - [x] Resume upload
-- [x] Candidate dashboard
-- [x] Recruiter dashboard
+- [x] Job creation
+- [x] Job editing
+- [x] Job activation/deactivation
+- [x] Job deletion
+- [x] Job search
+- [x] Job-type filtering
+- [x] Job details
+- [x] Job applications
+- [x] Cover letters
+- [x] Duplicate application prevention
+- [x] Application tracking
+- [x] Applicant review
+- [x] Application status management
 - [x] Docker configuration
+- [x] H2 development database
+- [x] MySQL support
 
 ### Planned
 
-- [ ] Advanced job filters
-- [ ] Fine-grained resume authorization
-- [ ] Stronger file-type validation
+- [ ] Advanced filtering
+- [ ] Pagination
+- [ ] Production-grade resume authorization
+- [ ] Stronger upload validation
 - [ ] Expanded automated tests
-- [ ] Production configuration profiles
-- [ ] Email notifications
-- [ ] Pagination for large datasets
-- [ ] Accessibility improvements
-- [ ] Production deployment with managed database/storage
+- [ ] Notifications
+- [ ] Recruiter analytics
+- [ ] Production deployment
 
 ---
 
-## Why This Project?
+## Why WorkHive Is a Strong Portfolio Project
 
-WorkHive was built as a practical demonstration of developing a complete Java web application rather than only implementing isolated CRUD operations.
+WorkHive demonstrates more than basic CRUD functionality.
 
-It combines:
+It brings together:
 
-**Backend**
+**Backend Engineering**
+- Java 21
 - Spring Boot
 - Spring MVC
 - Spring Security
-- JPA/Hibernate
 - Service/repository architecture
 
-**Database**
+**Database Engineering**
+- JPA/Hibernate
 - Relational entity design
-- JPA relationships
-- Repository-based persistence
-- H2 and MySQL support
+- Entity relationships
+- JPQL search
+- Unique constraints
 
-**Web**
+**Web Development**
 - Thymeleaf
 - Bootstrap
-- Responsive layouts
+- Responsive UI
 - Form validation
-- Server-side rendering
+- Role-specific dashboards
 
-**Software Engineering**
-- Authentication and authorization
-- File handling
-- Layered architecture
-- Dockerization
-- Testing foundation
+**Application Security**
+- BCrypt
+- Authentication
+- Authorization
+- CSRF protection
+- Ownership validation
+
+**Deployment**
+- Maven Wrapper
+- Docker
+- Docker Compose
+- H2/MySQL configuration
+
+The result is a complete recruitment workflow implemented as a single integrated web application.
 
 ---
 
@@ -533,6 +901,15 @@ B.Tech Computer Science & Engineering
 
 ---
 
+## Project Links
+
+- **Repository:** https://github.com/Kanduriavinash/workhive
+- **Portfolio:** https://kanduriavinash.github.io/Portfolio
+
+---
+
 ## License
 
-This project is licensed under the MIT License.
+No license file is currently included in the repository.
+
+If this project is intended to be publicly reusable, add an appropriate license file before describing it as an open-source licensed project.
