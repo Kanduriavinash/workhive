@@ -119,25 +119,27 @@ WorkHive follows a **layered MVC architecture**. Each layer has a focused respon
 
 ```mermaid
 flowchart TB
-    U[Browser / User] --> V[Thymeleaf Views]
-    V --> C[Spring MVC Controllers]
+    U["Browser / User"] --> V["Thymeleaf Views"]
+    V --> C["Spring MVC<br/>Controllers"]
 
-    C --> S[Service Layer]
-    S --> R[Repository Layer]
-    R --> D[(Relational Database)]
+    C --> S["Service Layer"]
+    S --> R["Repository Layer"]
+    R --> D[("Relational<br/>Database")]
 
-    C --> SEC[Spring Security]
-    SEC --> AUTH[Authentication & Authorization]
+    C --> SEC["Spring Security"]
+    SEC --> AUTH["Authentication<br/>& Authorization"]
 
-    S --> FS[FileStorageService]
-    FS --> FILES[uploads/resumes]
-
-    C --> DTO[DTO / Validation]
+    C --> DTO["DTO /<br/>Validation"]
     DTO --> S
 
-    style U fill:#f5f5f5,stroke:#333
-    style D fill:#f5f5f5,stroke:#333
-    style FILES fill:#f5f5f5,stroke:#333
+    S --> FS["File Storage<br/>Service"]
+    FS --> FILES["uploads/<br/>resumes"]
+
+    classDef node fill:#ffffff,stroke:#555555,stroke-width:1.5px,color:#111111;
+    classDef store fill:#f3f4f6,stroke:#555555,stroke-width:1.5px,color:#111111;
+
+    class U,V,C,S,R,SEC,AUTH,DTO,FS node;
+    class D,FILES store;
 ```
 
 ### Architecture layers
