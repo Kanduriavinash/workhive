@@ -113,10 +113,10 @@
 
                     <div class="col-lg-4 col-md-5 text-md-end border-top border-md-top-0 pt-3 pt-md-0 d-flex flex-column align-items-md-end justify-content-center">
                         <div class="fs-5 fw-bold text-body mb-1" th:if="${job.salary != null}">
-                            $<span th:text="${#numbers.formatDecimal(job.salary, 0, 'COMMA', 0, 'POINT')}">120,000</span>
-                            <span class="text-muted small fw-normal">/yr</span>
+                            ₹<span th:text="${#numbers.formatDecimal(job.salary, 0, 'COMMA', 0, 'POINT')}">120,000</span>
+                            <span class="text-muted small fw-normal">/year</span>
                         </div>
-                        <div class="text-muted small mb-1" th:if="${job.salary == null}">Competitive Compensation</div>
+                        <div class="text-muted small mb-1" th:if="${job.salary == null}">Salary not specified</div>
 
                         <div class="text-muted small mb-3" th:if="${job.deadline != null}">
                             <i class="bi bi-hourglass-split me-1"></i>Apply by <span th:text="${job.deadline}">2026-11-01</span>
