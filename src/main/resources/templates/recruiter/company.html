@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Company Profile - WorkHive')}"></head>
+<body>
+
+<!-- Navbar -->
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<main class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i><span th:text="${successMessage}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <div class="card p-4 p-md-5 border-0 shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                        <div>
+                            <span class="badge-soft-primary mb-2 d-inline-block">
+                                <i class="bi bi-building me-1"></i> Brand Identity
+                            </span>
+                            <h3 class="fw-bold text-body mb-1">Company Profile</h3>
+                            <p class="text-secondary small mb-0">Showcase your company mission, industry domain, culture, and headquarters to prospective applicants.</p>
+                        </div>
+                        <a th:href="@{/recruiter/dashboard}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Dashboard
+                        </a>
+                    </div>
+
+                    <form th:action="@{/recruiter/company}" th:object="${dto}" method="post">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Company Name *</label>
+                                <input type="text" th:field="*{companyName}" class="form-control" placeholder="e.g. Acme Tech Labs" required>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}"></div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Industry Sector</label>
+                                <input type="text" th:field="*{industry}" class="form-control" placeholder="e.g. Cloud Computing, FinTech, AI">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Official Website</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-globe"></i></span>
+                                    <input type="url" th:field="*{companyWebsite}" class="form-control" placeholder="https://example.com">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Headquarters Location</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                    <input type="text" th:field="*{companyLocation}" class="form-control" placeholder="City, State, Country">
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">About Company &amp; Engineering Culture</label>
+                                <textarea th:field="*{aboutCompany}" rows="6" class="form-control" placeholder="Share your organization's mission, technical challenges, working culture, and perks..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-end">
+                            <button type="submit" class="btn btn-primary px-4 fw-semibold">
+                                <i class="bi bi-save me-1"></i> Save Company Profile
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Manage Jobs - WorkHive')}"></head>
+<body>
+
+<!-- Navbar -->
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<main class="py-5">
+    <div class="container">
+
+        <!-- Flash alerts -->
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i><span th:text="${successMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+            <div>
+                <span class="badge-soft-primary mb-2 d-inline-block">
+                    <i class="bi bi-collection me-1"></i> Job Management
+                </span>
+                <h2 class="fw-bold text-body mb-1">Company Job Listings</h2>
+                <p class="text-secondary small mb-0">Publish new roles, pause applications, monitor pipelines, and edit listings.</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a th:href="@{/recruiter/dashboard}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-1"></i> Dashboard
+                </a>
+                <a th:href="@{/recruiter/jobs/new}" class="btn btn-primary">
+                    <i class="bi bi-plus-lg me-1"></i> Post New Job
+                </a>
+            </div>
+        </div>
+
+        <div class="card p-4 border-0 shadow-sm">
+            <div class="table-responsive" th:if="${!jobs.isEmpty()}">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Job Title</th>
+                            <th>Type &amp; Location</th>
+                            <th>Target Salary</th>
+                            <th>Applicants</th>
+                            <th>Deadline</th>
+                            <th>Status</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="job : ${jobs}">
+                            <td>
+                                <h6 class="fw-bold mb-0">
+                                    <a th:href="@{/jobs/{id}(id=${job.id})}" class="text-body text-decoration-none" th:text="${job.title}">Job Title</a>
+                                </h6>
+                                <span class="text-muted small">Posted <span th:text="${job.postedDate}">2026-10-01</span></span>
+                            </td>
+                            <td>
+                                <span class="badge-soft-primary me-1" th:text="${job.jobType.label}">Full Time</span>
+                                <span class="text-secondary small" th:text="${job.location}">Remote</span>
+                            </td>
+                            <td>
+                                <span class="fw-semibold text-body" th:if="${job.salary != null}">$<span th:text="${#numbers.formatDecimal(job.salary, 0, 'COMMA', 0, 'POINT')}">100,000</span></span>
+                                <span th:if="${job.salary == null}" class="text-muted small">Competitive</span>
+                            </td>
+                            <td>
+                                <a th:href="@{/recruiter/jobs/{id}/applicants(id=${job.id})}" class="btn btn-sm btn-outline-primary fw-semibold">
+                                    <i class="bi bi-people me-1"></i> <span th:text="${job.applicationCount}">0</span>
+                                </a>
+                            </td>
+                            <td class="small text-secondary" th:text="${job.deadline != null ? job.deadline : 'Open'}">2026-11-01</td>
+                            <td>
+                                <span class="badge-soft-success" th:if="${job.active}">Active</span>
+                                <span class="badge-soft-warning" th:if="${!job.active}">Closed</span>
+                            </td>
+                            <td class="text-end">
+                                <div class="d-inline-flex gap-1">
+                                    <!-- Toggle Active Status -->
+                                    <form th:action="@{/recruiter/jobs/{id}/toggle(id=${job.id})}" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary" th:title="${job.active ? 'Pause Listing' : 'Activate Listing'}">
+                                            <i class="bi" th:classappend="${job.active ? 'bi-pause-circle' : 'bi-play-circle'}"></i>
+                                        </button>
+                                    </form>
+                                    <!-- Edit -->
+                                    <a th:href="@{/recruiter/jobs/edit/{id}(id=${job.id})}" class="btn btn-sm btn-outline-secondary" title="Edit Job">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <!-- Delete -->
+                                    <form th:action="@{/recruiter/jobs/{id}/delete(id=${job.id})}" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this job posting?');">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete Job">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-center py-5" th:if="${jobs.isEmpty()}">
+                <div class="mx-auto mb-3" style="width: 64px; height: 64px; border-radius: 50%; background: rgba(37,99,235,0.08); display: flex; align-items: center; justify-content: center; font-size: 1.75rem; color: var(--brand-blue);">
+                    <i class="bi bi-briefcase"></i>
+                </div>
+                <h4 class="fw-bold text-body mb-1">No jobs posted yet</h4>
+                <p class="text-secondary small mb-4" style="max-width: 400px; margin: 0 auto;">
+                    Publish your first vacancy to start receiving high-quality candidates into your ATS pipeline.
+                </p>
+                <a th:href="@{/recruiter/jobs/new}" class="btn btn-primary px-4">
+                    <i class="bi bi-plus-lg me-1"></i> Post a Job Opening
+                </a>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Log In - WorkHive')}"></head>
+<body>
+
+<!-- Navbar -->
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<main class="py-5 d-flex align-items-center" style="min-height: calc(100vh - 160px);">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5 col-xl-4">
+
+                <!-- Auth Card -->
+                <div class="card auth-card p-4 p-sm-5 border-0">
+                    <div class="text-center mb-4">
+                        <img th:src="@{/images/logo.png}" alt="WorkHive Logo" style="height: 52px; object-fit: contain;" class="mb-3">
+                        <h2 class="fw-bold text-body mb-1">Welcome Back</h2>
+                        <p class="text-secondary small mb-0">Sign in to access your WorkHive career portal</p>
+                    </div>
+
+                    <!-- Alerts -->
+                    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show small" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-1"></i> <span th:text="${errorMessage}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                    <div th:if="${logoutMessage}" class="alert alert-success alert-dismissible fade show small" role="alert">
+                        <i class="bi bi-check-circle-fill me-1"></i> <span th:text="${logoutMessage}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show small" role="alert">
+                        <i class="bi bi-check-circle-fill me-1"></i> <span th:text="${successMessage}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+
+                    <!-- Form -->
+                    <form th:action="@{/login}" method="post">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Email Address</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input type="email" id="username" name="username" class="form-control" placeholder="name@example.com" required autofocus>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label for="password" class="form-label">Password</label>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold mb-3">
+                            <i class="bi bi-box-arrow-in-right me-1"></i> Log In to Account
+                        </button>
+                    </form>
+
+                    <!-- Quick Demo Credentials Box (Portfolio Essential) -->
+                    <div class="demo-pill-box text-center mb-4">
+                        <div class="small fw-bold text-body mb-2 d-flex align-items-center justify-content-center gap-1">
+                            <i class="bi bi-lightning-charge-fill text-warning"></i>
+                            <span>Portfolio Demo Accounts</span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-sm btn-outline-primary flex-fill" onclick="fillDemo('seeker@workhive.com', 'password123')">
+                                <i class="bi bi-person me-1"></i> Candidate
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary flex-fill" onclick="fillDemo('recruiter@workhive.com', 'password123')">
+                                <i class="bi bi-briefcase me-1"></i> Recruiter
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="text-center small text-secondary">
+                        Don't have an account yet? <a th:href="@{/register}" class="fw-semibold text-primary">Register here</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function fillDemo(email, pass) {
+        document.getElementById('username').value = email;
+        document.getElementById('password').value = pass;
+    }
+</script>
+</body>
+</html>
