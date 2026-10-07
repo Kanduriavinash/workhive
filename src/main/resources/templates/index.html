@@ -46,7 +46,7 @@
         <p class="small text-secondary mb-3" th:text="${#strings.abbreviate(job.description,150)}">Job description</p>
         <div class="mb-4" th:if="${job.skillsRequired}"><span class="skill-tag" th:each="skill : ${#strings.arraySplit(job.skillsRequired, ',')}" th:text="${#strings.trim(skill)}">Java</span></div>
         <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
-          <div><div class="small text-secondary">Salary</div><div class="fw-bold" th:if="${job.salary != null}">$<span th:text="${#numbers.formatDecimal(job.salary,0,'COMMA',0,'POINT')}">100,000</span><span class="small text-secondary fw-normal"> / year</span></div><div class="fw-semibold text-secondary" th:if="${job.salary == null}">Not specified</div></div>
+          <div><div class="small text-secondary">Salary</div><div class="fw-bold" th:if="${job.salary != null}">₹<span th:text="${#numbers.formatDecimal(job.salary,0,'COMMA',0,'POINT')}">100,000</span><span class="small text-secondary fw-normal"> / year</span></div><div class="fw-semibold text-secondary" th:if="${job.salary == null}">Not specified</div></div>
           <a th:href="@{/jobs/{id}(id=${job.id})}" class="btn btn-sm btn-primary">View job</a>
         </div>
       </article>
