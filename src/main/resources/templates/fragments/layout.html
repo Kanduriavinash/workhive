@@ -1,205 +1,85 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head(titleText)">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${titleText != null ? titleText : 'WorkHive'}">WorkHive</title>
-    <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <!-- Instant anti-flicker dark mode bootstrap script -->
-    <script>
-        (function() {
-            const theme = localStorage.getItem('workhive-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-            document.documentElement.setAttribute('data-bs-theme', theme);
-        })();
-    </script>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${titleText != null ? titleText : 'WorkHive'}">WorkHive</title>
+  <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <script>
+    (function(){const t=localStorage.getItem('workhive-theme')||'light';document.documentElement.setAttribute('data-bs-theme',t);})();
+  </script>
 </head>
 <body>
 
-<!-- Navbar Fragment -->
 <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-custom sticky-top py-2">
-    <div class="container">
-        <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
-            <img th:src="@{/images/logo.png}" alt="WorkHive Logo" height="42" class="me-2 rounded bg-white p-1 shadow-sm">
-            <span class="fw-bold">WorkHive</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" th:href="@{/}">
+      <img th:src="@{/images/logo.png}" alt="WorkHive Logo"><span>WorkHive</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 
-        <div class="collapse navbar-collapse" id="navbarMain">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}"><i class="bi bi-house me-1"></i> Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/jobs}"><i class="bi bi-briefcase me-1"></i> Browse Jobs</a>
-                </li>
+    <div class="collapse navbar-collapse" id="navbarMain">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        <li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/jobs}">Browse Jobs</a></li>
 
-                <!-- Job Seeker Menu -->
-                <li class="nav-item" sec:authorize="hasAuthority('ROLE_JOB_SEEKER')">
-                    <a class="nav-link" th:href="@{/seeker/dashboard}"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasAuthority('ROLE_JOB_SEEKER')">
-                    <a class="nav-link" th:href="@{/seeker/applications}"><i class="bi bi-file-earmark-check me-1"></i> My Applications</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasAuthority('ROLE_JOB_SEEKER')">
-                    <a class="nav-link" th:href="@{/seeker/profile}"><i class="bi bi-person me-1"></i> My Profile</a>
-                </li>
+        <li class="nav-item" sec:authorize="hasAuthority('ROLE_JOB_SEEKER')"><a class="nav-link" th:href="@{/seeker/dashboard}">Dashboard</a></li>
+        <li class="nav-item" sec:authorize="hasAuthority('ROLE_JOB_SEEKER')"><a class="nav-link" th:href="@{/seeker/applications}">Applications</a></li>
+        <li class="nav-item" sec:authorize="hasAuthority('ROLE_JOB_SEEKER')"><a class="nav-link" th:href="@{/seeker/profile}">Profile</a></li>
 
-                <!-- Recruiter Menu -->
-                <li class="nav-item" sec:authorize="hasAuthority('ROLE_RECRUITER')">
-                    <a class="nav-link" th:href="@{/recruiter/dashboard}"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasAuthority('ROLE_RECRUITER')">
-                    <a class="nav-link" th:href="@{/recruiter/jobs}"><i class="bi bi-list-task me-1"></i> Manage Jobs</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasAuthority('ROLE_RECRUITER')">
-                    <a class="nav-link" th:href="@{/recruiter/applicants}"><i class="bi bi-people me-1"></i> Applicants</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasAuthority('ROLE_RECRUITER')">
-                    <a class="nav-link" th:href="@{/recruiter/company}"><i class="bi bi-building me-1"></i> Company</a>
-                </li>
-            </ul>
+        <li class="nav-item" sec:authorize="hasAuthority('ROLE_RECRUITER')"><a class="nav-link" th:href="@{/recruiter/dashboard}">Dashboard</a></li>
+        <li class="nav-item" sec:authorize="hasAuthority('ROLE_RECRUITER')"><a class="nav-link" th:href="@{/recruiter/jobs}">Manage Jobs</a></li>
+        <li class="nav-item" sec:authorize="hasAuthority('ROLE_RECRUITER')"><a class="nav-link" th:href="@{/recruiter/applicants}">Applicants</a></li>
+        <li class="nav-item" sec:authorize="hasAuthority('ROLE_RECRUITER')"><a class="nav-link" th:href="@{/recruiter/company}">Company</a></li>
+      </ul>
 
-            <div class="d-flex align-items-center gap-3">
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-sm btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center" id="themeToggleBtn" type="button" title="Toggle theme" style="width:38px;height:38px;"><i class="bi bi-moon-stars" id="themeIcon"></i></button>
 
-                <!-- Dark Mode Toggle Button -->
-                <button class="btn btn-sm btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center"
-                        id="themeToggleBtn" type="button" title="Toggle Light / Dark Mode" style="width: 38px; height: 38px;">
-                    <i class="bi bi-moon-stars-fill text-primary" id="themeIcon"></i>
-                </button>
-
-                <!-- If Unauthenticated -->
-                <div sec:authorize="!isAuthenticated()" class="d-flex gap-2">
-                    <a th:href="@{/login}" class="btn btn-outline-primary px-3">Log In</a>
-                    <a th:href="@{/register}" class="btn btn-primary px-3">Sign Up</a>
-                </div>
-
-                <!-- If Authenticated -->
-                <div sec:authorize="isAuthenticated()" class="dropdown">
-                    <button class="btn btn-light dropdown-toggle d-flex align-items-center gap-2 border" type="button" data-bs-toggle="dropdown">
-                        <i class="bi bi-person-circle fs-5 text-primary"></i>
-                        <span sec:authentication="name" class="fw-semibold">User</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
-                        <li sec:authorize="hasAuthority('ROLE_JOB_SEEKER')">
-                            <a class="dropdown-item py-2" th:href="@{/seeker/profile}"><i class="bi bi-person me-2"></i>Edit Profile</a>
-                        </li>
-                        <li sec:authorize="hasAuthority('ROLE_RECRUITER')">
-                            <a class="dropdown-item py-2" th:href="@{/recruiter/jobs/new}"><i class="bi bi-plus-circle me-2"></i>Post New Job</a>
-                        </li>
-                        <li sec:authorize="hasAuthority('ROLE_RECRUITER')">
-                            <a class="dropdown-item py-2" th:href="@{/recruiter/company}"><i class="bi bi-building me-2"></i>Company Details</a>
-                        </li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <form th:action="@{/logout}" method="post" class="d-inline">
-                                <button type="submit" class="dropdown-item text-danger py-2">
-                                    <i class="bi bi-box-arrow-right me-2"></i>Log Out
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <div sec:authorize="!isAuthenticated()" class="d-flex gap-2">
+          <a th:href="@{/login}" class="btn btn-outline-primary px-3">Log in</a>
+          <a th:href="@{/register}" class="btn btn-primary px-3">Create account</a>
         </div>
+
+        <div sec:authorize="isAuthenticated()" class="dropdown">
+          <button class="btn btn-light dropdown-toggle d-flex align-items-center gap-2 border" type="button" data-bs-toggle="dropdown">
+            <i class="bi bi-person-circle text-primary"></i><span sec:authentication="name" class="fw-semibold">User</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li sec:authorize="hasAuthority('ROLE_JOB_SEEKER')"><a class="dropdown-item py-2" th:href="@{/seeker/profile}">My profile</a></li>
+            <li sec:authorize="hasAuthority('ROLE_RECRUITER')"><a class="dropdown-item py-2" th:href="@{/recruiter/jobs/new}">Post a job</a></li>
+            <li sec:authorize="hasAuthority('ROLE_RECRUITER')"><a class="dropdown-item py-2" th:href="@{/recruiter/company}">Company profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><form th:action="@{/logout}" method="post" class="d-inline"><button type="submit" class="dropdown-item text-danger py-2">Log out</button></form></li>
+          </ul>
+        </div>
+      </div>
     </div>
+  </div>
 </nav>
 
-<!-- Footer Fragment -->
-<footer th:fragment="footer" class="py-5 mt-auto">
-    <div class="container">
-        <div class="row g-4 mb-4">
-            <div class="col-lg-4 col-md-6">
-                <div class="d-flex align-items-center mb-3">
-                    <img th:src="@{/images/logo.png}" alt="WorkHive Logo" height="38" class="me-2 rounded bg-white p-1 shadow-sm">
-                    <span class="fw-bold fs-4 text-white">WorkHive</span>
-                </div>
-                <p class="text-secondary small">
-                    WorkHive is an end-to-end recruitment platform connecting exceptional engineering talent with forward-thinking employers.
-                </p>
-                <div class="text-muted small">
-                    Built with <strong>Java 21, Spring Boot 3, Spring Data JPA &amp; Spring Security</strong>.
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-6">
-                <h6 class="text-white fw-bold mb-3">For Candidates</h6>
-                <ul class="list-unstyled small d-flex flex-column gap-2">
-                    <li><a th:href="@{/jobs}">Browse All Jobs</a></li>
-                    <li><a th:href="@{/register}">Create Candidate Profile</a></li>
-                    <li><a th:href="@{/seeker/applications}">Track Applications</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-2 col-md-6">
-                <h6 class="text-white fw-bold mb-3">For Employers</h6>
-                <ul class="list-unstyled small d-flex flex-column gap-2">
-                    <li><a th:href="@{/register}">Register as Recruiter</a></li>
-                    <li><a th:href="@{/recruiter/jobs/new}">Post an Opening</a></li>
-                    <li><a th:href="@{/recruiter/applicants}">Applicant Tracking</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <h6 class="text-white fw-bold mb-3">Portfolio &amp; Showcase</h6>
-                <p class="text-secondary small">
-                    This project was developed as a full-scale semester project showcase demonstrating enterprise Java backend architecture, relational data modeling, and web deployment.
-                </p>
-                <div class="d-flex gap-3">
-                    <span class="badge bg-primary">Spring Boot 3</span>
-                    <span class="badge bg-secondary">MySQL / H2</span>
-                    <span class="badge bg-info text-dark">Thymeleaf</span>
-                    <span class="badge bg-success">Dark Mode</span>
-                </div>
-            </div>
-        </div>
-        <hr class="border-secondary">
-        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center text-secondary small">
-            <div>&copy; 2026 WorkHive Platform. All rights reserved.</div>
-            <div class="mt-2 mt-sm-0">
-                <span>Designed &amp; Engineered with Spring Boot</span>
-            </div>
-        </div>
+<footer th:fragment="footer" class="footer-workhive mt-5 py-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-5">
+        <div class="d-flex align-items-center gap-2 mb-3"><img th:src="@{/images/logo.png}" alt="WorkHive Logo" height="36" class="rounded bg-white p-1"><span class="fw-bold fs-4 text-white">WorkHive</span></div>
+        <p class="small mb-0">A role-based job portal for discovering opportunities, managing candidate profiles and running recruiter workflows.</p>
+      </div>
+      <div class="col-sm-4 col-lg-2"><h6>Explore</h6><div class="d-flex flex-column gap-2 small"><a th:href="@{/}">Home</a><a th:href="@{/jobs}">Browse jobs</a><a th:href="@{/register}">Create account</a></div></div>
+      <div class="col-sm-4 col-lg-2"><h6>Platform</h6><div class="d-flex flex-column gap-2 small"><a th:href="@{/login}">Sign in</a><a th:href="@{/register}">For candidates</a><a th:href="@{/register}">For recruiters</a></div></div>
+      <div class="col-sm-4 col-lg-3"><h6>Technology</h6><p class="small mb-0">Java 21 · Spring Boot · Spring Security · Spring Data JPA · Thymeleaf · MySQL / H2</p></div>
     </div>
-
-    <!-- Theme Toggle JavaScript -->
-    <script>
-        (function() {
-            function updateThemeDisplay(theme) {
-                document.documentElement.setAttribute('data-bs-theme', theme);
-                localStorage.setItem('workhive-theme', theme);
-                const themeBtn = document.getElementById('themeToggleBtn');
-                const themeIcon = document.getElementById('themeIcon');
-                if (themeIcon) {
-                    if (theme === 'dark') {
-                        themeIcon.className = 'bi bi-sun-fill text-warning';
-                        if (themeBtn) themeBtn.setAttribute('title', 'Switch to Light Mode');
-                    } else {
-                        themeIcon.className = 'bi bi-moon-stars-fill text-primary';
-                        if (themeBtn) themeBtn.setAttribute('title', 'Switch to Dark Mode');
-                    }
-                }
-            }
-
-            const activeTheme = localStorage.getItem('workhive-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-
-            window.addEventListener('DOMContentLoaded', function() {
-                updateThemeDisplay(activeTheme);
-
-                const themeBtn = document.getElementById('themeToggleBtn');
-                if (themeBtn) {
-                    themeBtn.addEventListener('click', function() {
-                        const current = document.documentElement.getAttribute('data-bs-theme') || 'light';
-                        const next = current === 'dark' ? 'light' : 'dark';
-                        updateThemeDisplay(next);
-                    });
-                }
-            });
-        })();
-    </script>
+    <hr class="border-secondary my-4">
+    <div class="d-flex flex-column flex-sm-row justify-content-between gap-2 small"><span>© 2026 WorkHive</span><span>Built as a full-stack Java project</span></div>
+  </div>
+  <script>
+    (function(){
+      function updateTheme(t){document.documentElement.setAttribute('data-bs-theme',t);localStorage.setItem('workhive-theme',t);const i=document.getElementById('themeIcon');if(i)i.className=t==='dark'?'bi bi-sun text-warning':'bi bi-moon-stars text-primary';}
+      window.addEventListener('DOMContentLoaded',function(){const t=localStorage.getItem('workhive-theme')||'light';updateTheme(t);const b=document.getElementById('themeToggleBtn');if(b)b.addEventListener('click',function(){updateTheme(document.documentElement.getAttribute('data-bs-theme')==='dark'?'light':'dark');});});
+    })();
+  </script>
 </footer>
-
 </body>
 </html>
