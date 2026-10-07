@@ -49,18 +49,17 @@
 
                         <div class="fs-5 text-secondary fw-semibold mb-3 d-flex align-items-center gap-2">
                             <span th:text="${job.recruiter.companyName}">Company Name</span>
-                            <i class="bi bi-patch-check-fill text-primary" title="Verified Organization"></i>
                         </div>
 
                         <div class="d-flex gap-3 text-secondary small flex-wrap">
-                            <div><i class="bi bi-geo-alt me-1 text-primary"></i> <span th:text="${job.location}">Location</span></div>
+                            <div><i class="bi bi-geo-alt me-1"></i> <span th:text="${job.location}">Location</span></div>
                             <div>
-                                <i class="bi bi-cash-stack me-1 text-success"></i>
+                                <i class="bi bi-cash-stack me-1"></i>
                                 <span th:if="${job.salary != null}">$<span th:text="${#numbers.formatDecimal(job.salary, 0, 'COMMA', 0, 'POINT')}">100,000</span> / year</span>
                                 <span th:if="${job.salary == null}">Competitive Salary</span>
                             </div>
                             <div><i class="bi bi-calendar3 me-1 text-muted"></i> Posted <span th:text="${job.postedDate}">2026-10-01</span></div>
-                            <div th:if="${job.deadline != null}"><i class="bi bi-hourglass-split me-1 text-warning"></i> Deadline: <span th:text="${job.deadline}">2026-11-01</span></div>
+                            <div th:if="${job.deadline != null}"><i class="bi bi-hourglass-split me-1"></i> Deadline: <span th:text="${job.deadline}">2026-11-01</span></div>
                         </div>
                     </div>
                 </div>
@@ -114,7 +113,7 @@
                 <!-- Description -->
                 <div class="card p-4 p-md-5 shadow-sm border-0 mb-4">
                     <h4 class="fw-bold mb-3 d-flex align-items-center gap-2">
-                        <i class="bi bi-file-text text-primary"></i> Role Overview
+                        <i class="bi bi-file-text"></i> Role Overview
                     </h4>
                     <div class="text-secondary" style="white-space: pre-line; line-height: 1.8; font-size: 0.98rem;" th:text="${job.description}">
                         Job description details...
@@ -124,7 +123,7 @@
                 <!-- Requirements -->
                 <div class="card p-4 p-md-5 shadow-sm border-0 mb-4" th:if="${job.requirements != null and !job.requirements.isBlank()}">
                     <h4 class="fw-bold mb-3 d-flex align-items-center gap-2">
-                        <i class="bi bi-check-circle text-primary"></i> Requirements
+                        <i class="bi bi-check-circle"></i> Requirements
                     </h4>
                     <div class="text-secondary" style="white-space: pre-line; line-height: 1.8; font-size: 0.98rem;" th:text="${job.requirements}">
                         Role requirements details...
@@ -134,7 +133,7 @@
                 <!-- Required Technical Skills -->
                 <div class="card p-4 p-md-5 shadow-sm border-0" th:if="${job.skillsRequired != null and !job.skillsRequired.isBlank()}">
                     <h4 class="fw-bold mb-3 d-flex align-items-center gap-2">
-                        <i class="bi bi-cpu text-primary"></i> Required Skills
+                        <i class="bi bi-cpu"></i> Required Skills
                     </h4>
                     <div class="d-flex flex-wrap gap-2 pt-1">
                         <span class="skill-tag fs-6 px-3 py-2" th:each="skill : ${#strings.arraySplit(job.skillsRequired, ',')}" th:text="${#strings.trim(skill)}">
@@ -159,7 +158,7 @@
                         </div>
 
                         <div class="text-secondary small mb-3" th:if="${job.recruiter.companyLocation != null}">
-                            <i class="bi bi-geo-alt me-1 text-primary"></i> Headquarters: <strong class="text-body" th:text="${job.recruiter.companyLocation}">HQ</strong>
+                            <i class="bi bi-geo-alt me-1"></i> Headquarters: <strong class="text-body" th:text="${job.recruiter.companyLocation}">HQ</strong>
                         </div>
 
                         <p class="text-secondary small mb-4" th:if="${job.recruiter.aboutCompany != null}" th:text="${job.recruiter.aboutCompany}">
