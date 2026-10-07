@@ -55,8 +55,8 @@
                             <div><i class="bi bi-geo-alt me-1"></i> <span th:text="${job.location}">Location</span></div>
                             <div>
                                 <i class="bi bi-cash-stack me-1"></i>
-                                <span th:if="${job.salary != null}">$<span th:text="${#numbers.formatDecimal(job.salary, 0, 'COMMA', 0, 'POINT')}">100,000</span> / year</span>
-                                <span th:if="${job.salary == null}">Competitive Salary</span>
+                                <span th:if="${job.salary != null}">₹<span th:text="${#numbers.formatDecimal(job.salary, 0, 'COMMA', 0, 'POINT')}">100,000</span> / year</span>
+                                <span th:if="${job.salary == null}">Salary not specified</span>
                             </div>
                             <div><i class="bi bi-calendar3 me-1 text-muted"></i> Posted <span th:text="${job.postedDate}">2026-10-01</span></div>
                             <div th:if="${job.deadline != null}"><i class="bi bi-hourglass-split me-1"></i> Deadline: <span th:text="${job.deadline}">2026-11-01</span></div>
@@ -186,8 +186,8 @@
                             </li>
                             <li class="d-flex justify-content-between">
                                 <span class="text-muted">Target Salary</span>
-                                <span class="fw-semibold text-body" th:if="${job.salary != null}">$<span th:text="${#numbers.formatDecimal(job.salary, 0, 'COMMA', 0, 'POINT')}">120,000</span>/yr</span>
-                                <span class="fw-semibold text-body" th:if="${job.salary == null}">Competitive</span>
+                                <span class="fw-semibold text-body" th:if="${job.salary != null}">₹<span th:text="${#numbers.formatDecimal(job.salary, 0, 'COMMA', 0, 'POINT')}">120,000</span>/year</span>
+                                <span class="fw-semibold text-body" th:if="${job.salary == null}">Not specified</span>
                             </li>
                             <li class="d-flex justify-content-between">
                                 <span class="text-muted">Date Posted</span>
