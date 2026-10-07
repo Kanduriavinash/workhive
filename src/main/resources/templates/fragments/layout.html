@@ -74,5 +74,25 @@
   </div>
 
 </footer>
+<script>
+(function(){
+  function applyTheme(theme){
+    document.documentElement.setAttribute('data-bs-theme',theme);
+    localStorage.setItem('workhive-theme',theme);
+    const icon=document.getElementById('themeIcon');
+    const btn=document.getElementById('themeToggleBtn');
+    if(icon) icon.className=theme==='dark'?'bi bi-sun':'bi bi-moon-stars';
+    if(btn) btn.title=theme==='dark'?'Switch to light mode':'Switch to dark mode';
+  }
+  window.addEventListener('DOMContentLoaded',function(){
+    const saved=localStorage.getItem('workhive-theme')||'dark';
+    applyTheme(saved);
+    const btn=document.getElementById('themeToggleBtn');
+    if(btn) btn.addEventListener('click',function(){
+      applyTheme(document.documentElement.getAttribute('data-bs-theme')==='dark'?'light':'dark');
+    });
+  });
+})();
+</script>
 </body>
 </html>
