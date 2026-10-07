@@ -34,3 +34,21 @@
 .demo-pill-box,.demo-pill-box .small,.demo-pill-box span{color:#222!important}
 .demo-pill-box .text-warning{color:#222!important}
 .alert{color:#222!important}
+
+/* Accessibility: keep all primary text readable on the monochrome light UI */
+body,.text-body{color:#111!important}
+.form-label,label{color:#222!important;font-weight:600}
+.form-control,.form-select{color:#111!important;background:#fff!important}
+.form-control::placeholder{color:#888!important;opacity:1}
+.input-group-text{color:#444!important;background:#f5f5f5!important;border-color:#cfcfcf!important}
+.text-secondary,.text-muted{color:#666!important}
+small,.small{color:#666}
+.navbar-custom .nav-link{color:#333!important}
+.navbar-brand{color:#111!important}
+.auth-card h1,.auth-card h2,.auth-card h3,.auth-card h4,.auth-card h5,.auth-card h6{color:#111!important}
+.auth-card p{color:#555!important}
+.auth-card .demo-pill-box{color:#222!important}
+.auth-card .demo-pill-box .text-body{color:#222!important}
+.auth-card a.text-primary{color:#111!important;text-decoration:underline;text-underline-offset:2px}
+.auth-card .btn-outline-primary,.auth-card .btn-outline-secondary{color:#111!important;border-color:#999!important;background:#fff!important}
+.auth-card .btn-outline-primary:hover,.auth-card .btn-outline-secondary:hover{color:#fff!important;background:#111!important;border-color:#111!important}
