@@ -24,3 +24,13 @@
 .input-group-text{color:#444}
 
 .bg-primary-subtle,.bg-success-subtle,.bg-warning-subtle,.bg-danger-subtle{background:#eee!important}.text-primary{color:#111!important}.text-success,.text-warning,.text-danger{color:#333!important}
+/* Readability: keep all form and authentication text clearly visible */
+.form-label,.form-check-label{color:#111!important;font-weight:600}
+.text-body{color:#111!important}
+.auth-card p,.auth-card .small{color:#444!important}
+.auth-card .form-control{color:#111!important;background:#fff!important}
+.auth-card .form-control::placeholder{color:#888!important;opacity:1}
+.auth-card .input-group-text{color:#444!important;background:#eee!important;border-color:#ccc!important}
+.demo-pill-box,.demo-pill-box .small,.demo-pill-box span{color:#222!important}
+.demo-pill-box .text-warning{color:#222!important}
+.alert{color:#222!important}
